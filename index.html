@@ -104,9 +104,9 @@
           <label class="field-label" for="trackInput">YouTube Music link or 11-character video ID</label>
           <div class="input-row">
             <input id="trackInput" class="text-input" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="https://music.youtube.com/watch?v=…" aria-describedby="trackHelp">
-            <button id="playButton" class="button button--primary" type="button">Play</button>
+            <button id="playButton" class="button button--primary" type="button">Open in YouTube Music</button>
           </div>
-          <p id="trackHelp" class="help">Paste a YouTube / YouTube Music link or a video ID such as <code>dQw4w9WgXcQ</code>.</p>
+          <p id="trackHelp" class="help">Paste a YouTube / YouTube Music link or a video ID such as <code>dQw4w9WgXcQ</code>. The main action opens the real YouTube Music app — no ads with Premium, and real offline downloads.</p>
           <p id="inputError" class="error" role="alert" hidden></p>
 
           <div id="playerFrame" class="player-frame" hidden>
@@ -114,10 +114,10 @@
           </div>
 
           <div class="button-grid">
+            <button id="previewButton" class="button button--ghost" type="button">Preview here instead (shows YouTube ads)</button>
             <button id="searchButton" class="button button--ghost" type="button">Search YouTube Music</button>
-            <button id="downloadButton" class="button button--ghost" type="button" disabled>Open in YouTube Music to download offline</button>
           </div>
-          <p class="help help--honest">Honest note: a web player cannot download songs. Offline downloads require the YouTube Music app and usually a Premium subscription; the button above opens the track there.</p>
+          <p class="help help--honest">Honest note: the embedded preview plays YouTube's own ads — this web player cannot remove them. Only YouTube Premium removes ads, and real offline downloads live in the YouTube Music app. The main button opens the track there.</p>
         </div>
       </section>
 

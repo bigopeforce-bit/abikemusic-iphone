@@ -25,8 +25,9 @@ In Safari, tap **Share** → **Add to Home Screen** → **Add**. Launch from the
 ## Limitations (by design)
 
 - The gate opens Google's own YouTube sign-in page in a new tab. This web app has no OAuth client credentials, so it **cannot verify a Google session**; after opening the tab it continues into a local player shell. No password, cookie, token or session is collected or stored — everything is in memory and clears on reload.
-- Playback uses `youtube-nocookie.com/embed`. Some tracks are blocked from embedding by their rights holders; use the YouTube Music buttons in that case. iOS may require you to tap play in the embed even when autoplay is requested.
-- A web player **cannot download songs**. The "Open in YouTube Music to download offline" button opens the track in YouTube Music, where downloads may require the app and a Premium subscription. The app shell itself can work offline.
+- The **main action is "Open in YouTube Music"**: it hands the pasted track to the real YouTube Music app/site. There are no in-player ads there beyond whatever YouTube itself serves, and YouTube Premium removes ads. A web player cannot strip ads from YouTube's embedded player, so the optional "Preview here" button is clearly labeled as showing ads.
+- The optional embedded preview uses `youtube-nocookie.com/embed`. Some tracks are blocked from embedding by their rights holders; use the YouTube Music button in that case. iOS may require you to tap play in the embed even when autoplay is requested.
+- A web player **cannot download songs**. Opening the track in YouTube Music lets you download there, where it may require the app and a Premium subscription. The app shell itself can work offline.
 - Library is a short in-memory list of tracks played during this app session; it does not sync your real YouTube Music library.
 - Search buttons open YouTube Music in a new tab rather than using an API key.
 

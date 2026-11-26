@@ -19,7 +19,7 @@
   var errorLabel = el('inputError');
   var playerFrame = el('playerFrame');
   var embed = el('youtubeEmbed');
-  var downloadButton = el('downloadButton');
+  var previewButton = el('previewButton');
   var recentList = el('recentList');
   var toastNode = el('toast');
   var reduceMotionInput = el('reduceMotion');
@@ -143,20 +143,34 @@
     errorLabel.hidden = !message;
   }
 
-  function playTrack(id) {
-    state.currentId = id;
-    embed.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
-      '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
-    playerFrame.hidden = false;
-    downloadButton.disabled = false;
-    setError('');
-
+  function rememberTrack(id) {
     var at = state.recent.indexOf(id);
     if (at !== -1) state.recent.splice(at, 1);
     state.recent.unshift(id);
     state.recent = state.recent.slice(0, MAX_RECENT);
     renderRecent();
-    showToast('Loaded ' + id + '. Tap the embed if iOS blocks autoplay.');
+  }
+
+  // Primary action: hand the track to the real YouTube Music app/site.
+  // No ads with Premium, real offline downloads, no session stored here.
+  function openTrack(id) {
+    state.currentId = id;
+    rememberTrack(id);
+    setError('');
+    openInNewTab(YT_MUSIC + 'watch?v=' + encodeURIComponent(id));
+    showToast('Opened in YouTube Music. Premium removes ads and enables offline downloads.');
+  }
+
+  // Secondary, opt-in action: the embedded player. YouTube serves its own ads
+  // here and a web player cannot strip them — only Premium removes them.
+  function previewTrack(id) {
+    state.currentId = id;
+    embed.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
+      '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
+    playerFrame.hidden = false;
+    rememberTrack(id);
+    setError('');
+    showToast('Embedded preview — YouTube ads apply. Tap the embed if iOS blocks autoplay.');
   }
 
   function renderRecent() {
@@ -177,20 +191,31 @@
       button.type = 'button';
       button.className = 'button button--ghost track-go';
       button.dataset.id = id;
-      button.textContent = 'Play again';
+      button.textContent = 'Open in YouTube Music';
       row.appendChild(label);
       row.appendChild(button);
       recentList.appendChild(row);
     });
   }
 
-  el('playButton').addEventListener('click', function () {
+  function currentIdFromInput() {
     var id = extractVideoId(trackInput.value);
+    if (!id) setError('That is not a YouTube video link or an 11-character video ID.');
+    return id;
+  }
+
+  el('playButton').addEventListener('click', function () {
+    var id = currentIdFromInput();
+    if (id) openTrack(id);
+  });
+
+  previewButton.addEventListener('click', function () {
+    var id = extractVideoId(trackInput.value) || state.currentId;
     if (!id) {
       setError('That is not a YouTube video link or an 11-character video ID.');
       return;
     }
-    playTrack(id);
+    previewTrack(id);
   });
 
   trackInput.addEventListener('input', function () { setError(''); });
@@ -204,17 +229,12 @@
     openInNewTab(url);
   });
 
-  downloadButton.addEventListener('click', function () {
-    if (!state.currentId) return;
-    openInNewTab(YT_MUSIC + 'watch?v=' + encodeURIComponent(state.currentId));
-  });
-
   recentList.addEventListener('click', function (event) {
     var button = event.target.closest ? event.target.closest('button[data-id]') : null;
     if (!button) return;
     var id = button.dataset.id;
     trackInput.value = id;
-    playTrack(id);
+    openTrack(id);
     showSection('search');
   });
 
