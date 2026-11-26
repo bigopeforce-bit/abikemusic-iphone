@@ -1,7 +1,7 @@
 /* Abike Music service worker: caches only the app shell, never YouTube content. */
 'use strict';
 
-var CACHE_NAME = 'abike-music-shell-v1';
+var CACHE_NAME = 'abike-music-shell-v2';
 var SCOPE = self.registration.scope;
 var INDEX_URL = new URL('index.html', SCOPE).href;
 var SHELL_FILES = [
