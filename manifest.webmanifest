@@ -1,0 +1,28 @@
+{
+  "id": "./",
+  "name": "Abike Music",
+  "short_name": "Abike",
+  "description": "A YouTube-only, dependency-free web player with Abike Music branding.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#060818",
+  "theme_color": "#080b1c",
+  "lang": "en",
+  "categories": ["music", "entertainment"],
+  "icons": [
+    {
+      "src": "assets/abike-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/abike-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
