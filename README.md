@@ -2,6 +2,8 @@
 
 A static, dependency-free web version of Abike Music you can open on iPhone right now. It has a live branded boot animation, a YouTube-only sign-in gate, and a player shell with Search, Library, Offline and Settings sections. No build step, no framework, no account storage.
 
+**Live URL:** https://bigopeforce-bit.github.io/abikemusic-iphone/
+
 ## Files
 
 - `index.html` — markup for boot, sign-in gate and all four sections
